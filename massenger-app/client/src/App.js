@@ -5,7 +5,7 @@ import Chat from "./pages/Chat";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import io from "socket.io-client";
 
-const socket = io.connect("http://localhost:5000");
+const socket = io.connect("https://chatapp-lsqb.onrender.com/");
 
 function App() {
   const [username, setUsername] = useState("");

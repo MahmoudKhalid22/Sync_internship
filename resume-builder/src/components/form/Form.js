@@ -19,12 +19,26 @@ function Form() {
     gpa: "",
   });
 
-  const [work, setWork] = useState({});
+  const [work, setWork] = useState({
+    company: "",
+    location: "",
+    startDate: "",
+    endDate: "",
+    description: "",
+  });
+
   const [obj, setObj] = useState("");
   const [skills, setSkills] = useState([]);
 
   const onAddSkill = (sk) => {
     setSkills(sk);
+  };
+
+  const handleWorkChange = (field, value) => {
+    setWork((prevWork) => ({
+      ...prevWork,
+      [field]: value,
+    }));
   };
 
   const generatePDF = (e) => {
@@ -102,34 +116,49 @@ function Form() {
     doc.setLineWidth(0.5); // Set the line width
     doc.line(10, 111, 10 + objTextWidth, 111); // Draw a line under the text
     doc.setFont("arial", "normal");
+    const maxCharsPerLine = 60;
+    let objective = obj;
+    let offsetY = 121;
 
-    doc.text(obj);
-
+    while (objective.length > 0) {
+      if (objective.length > maxCharsPerLine) {
+        let line = objective.substring(0, maxCharsPerLine);
+        doc.text(line, 20, offsetY);
+        objective = objective.substring(maxCharsPerLine);
+        offsetY += 7; // Adjust the offset as needed based on the font size and layout
+      } else {
+        doc.text(objective, 20, offsetY);
+        objective = "";
+      }
+    }
     // Work Experience
+    let yOffset = offsetY + 10;
     doc.setFont("arial", "bold");
 
-    doc.text("Work Experience", 10, 110);
-
-    const WorkTextWidth = doc.getStringUnitWidth("Work Experience ") * 6;
+    doc.text("Work Experience", 10, yOffset);
+    const workExpWidth = doc.getStringUnitWidth("Work Experience ") * 6;
 
     doc.setLineWidth(0.5); // Set the line width
-    doc.line(10, 111, 10 + WorkTextWidth, 111); // Draw a line under the text
+    doc.line(10, yOffset + 1, 10 + workExpWidth, yOffset + 1); // Draw a line under the text
     doc.setFont("arial", "normal");
-
-    doc.text(work, 20, 120);
-    // doc.text(work, 20, 127);
+    const { company, location, startDate, endDate } = work;
+    doc.text(`Company: ${company}`, 20, offsetY + 20);
+    doc.text(`Location: ${location}`, 20, offsetY + 27);
+    doc.text(`Start Date: ${startDate}`, 20, offsetY + 34);
+    doc.text(`End Date: ${endDate}`, 20, offsetY + 41);
 
     // Skills with bullet points
     doc.setFont("arial", "bold");
 
-    doc.text("Skills:", 10, 200);
+    const skillsStartY = yOffset + 48;
+    doc.text("Skills", 10, skillsStartY);
     const skillTextLength = doc.getStringUnitWidth("Skills ") * 6;
     doc.setLineWidth(0.5); // Set the line width
-    doc.line(10, 201, 10 + skillTextLength, 201); // Draw a line under the text
+    doc.line(10, skillsStartY + 1, 10 + skillTextLength, skillsStartY + 1); // Draw a line under the text
     doc.setFont("arial", "normal");
 
     skills.forEach((skill, index) => {
-      doc.text(`• ${skill}`, 20, 208 + index * 5);
+      doc.text(`• ${skill}`, 20, skillsStartY + 10 + index * 5);
     });
 
     // Save the PDF
@@ -137,11 +166,11 @@ function Form() {
   };
 
   return (
-    <div id="form" className={styles.container}>
+    <div className={styles.container}>
       <form onSubmit={generatePDF}>
         <div className={styles.item}>
           <label htmlFor="basic">Basic info</label>
-          <div id="basic">
+          <div id="basic" className={styles.inputsInfo}>
             <input
               type="text"
               placeholder="name"
@@ -156,7 +185,7 @@ function Form() {
         </div>
         <div className={styles.item}>
           <label htmlFor="contact">Contact</label>
-          <div id="contact">
+          <div id="contact" className={styles.inputsContact}>
             <input
               type="tel"
               placeholder="Phone Number"
@@ -202,7 +231,7 @@ function Form() {
 
         <div className={styles.item}>
           <label htmlFor="education">Education</label>
-          <div id="education">
+          <div id="education" className={styles.inputsContact}>
             <input
               type="text"
               placeholder="University"
@@ -253,11 +282,40 @@ function Form() {
         </div>
         <div className={styles.item}>
           <label htmlFor="work">Work Experience</label>
-          <div id="work">
-            <textarea onChange={(e) => setWork(e.target.value)} />
+          <div id="work" className={styles.inputsContact}>
+            <input
+              type="text"
+              placeholder="Company"
+              onChange={(e) => handleWorkChange("company", e.target.value)}
+            />
+            <input
+              type="text"
+              placeholder="Location"
+              onChange={(e) => handleWorkChange("location", e.target.value)}
+            />
+            <div>
+              <label htmlFor="start">Start date</label>
+              <input
+                id="start"
+                type="date"
+                placeholder="start date"
+                onChange={(e) => handleWorkChange("startDate", e.target.value)}
+              />
+            </div>
+            <div>
+              <label htmlFor="end">End date</label>
+
+              <input
+                id="end"
+                type="date"
+                placeholder="end date"
+                onChange={(e) => handleWorkChange("endDate", e.target.value)}
+              />
+            </div>
           </div>
         </div>
-        <div className={styles.item}>
+
+        <div className={`${styles.item}  ${styles.skillItem}`}>
           <label htmlFor="skills">Skills</label>
           <div id="skills">
             <AddSkill onAddSkill={onAddSkill} />

@@ -5,12 +5,19 @@ import styles from "./AddSkill.module.css";
 function AddSkill({ onAddSkill }) {
   const [skill, setSkill] = useState([]);
   const [skills, setSkills] = useState([]);
+  const [err, setErr] = useState(false);
 
   const handleSubmit = () => {
-    setSkills((prev) => [...prev, skill]);
+    if (skill.toString().trim() === "") setErr(true);
+    if (skill.toString().trim() !== "") {
+      setErr(false);
+      setSkills((prev) => [...prev, skill]);
 
-    setSkill("");
+      setSkill("");
+    }
   };
+
+  console.log(err);
 
   const deleteSkill = (sk) => {
     const filteredSkills = skills.filter((skill) => skill !== sk);
@@ -35,13 +42,13 @@ function AddSkill({ onAddSkill }) {
           ))}
         </label>
       )}
-
       <input
         type="text"
         onChange={(e) => setSkill(e.target.value)}
         value={skill}
       />
-      <div onClick={handleSubmit} className={styles.skillBtn}>
+      {err && <p className={styles.error}>The input should not be empty</p>}
+      <div onClick={handleSubmit} className={styles.skillBtnSubmit}>
         Add Skill
       </div>
     </div>

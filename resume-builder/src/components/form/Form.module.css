@@ -1,12 +1,22 @@
 /* Style for the form container */
+
 .container form {
-  max-width: 400px;
+  max-width: 45rem;
   margin: 0 auto;
   padding: 20px;
-  background-color: #333; /* Dark background color */
-  color: #fff; /* Light text color */
+  background-color: #ececec; /* Dark background color */
+  color: #8d8d8d;
   border-radius: 5px;
   margin-top: 1rem;
+}
+@media (max-width: 767px) {
+  .container {
+    margin: 0 0.5rem;
+  }
+
+  .container form {
+    max-width: 25rem;
+  }
 }
 
 /* Style for labels */
@@ -20,6 +30,7 @@
 .container input[type="text"],
 .container input[type="email"],
 .container input[type="tel"],
+.container input[type="date"],
 .container textarea {
   width: 100%;
   padding: 10px;
@@ -27,9 +38,21 @@
   border: 1px solid #ccc;
   border-radius: 3px;
   font-size: 16px;
+  color: #4d4d4d;
 }
 .container textarea {
   height: 20rem;
+}
+.inputsInfo {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.inputsContact {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  row-gap: 0.5rem;
+  column-gap: 1rem;
 }
 
 /* Style for placeholders */
@@ -50,9 +73,13 @@
   cursor: pointer;
   font-size: 18px;
   transition: 0.3s ease;
+  margin-top: 1.5rem;
 }
 
 /* Style for submit button on hover */
 .container .download:hover {
   background-color: #0056b3;
+}
+.skillItem {
+  margin-top: 2rem;
 }

@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import styles from "./Header.module.css";
 import heroSectionSVG from "../../assets/heroSectionSVG.svg";
 
@@ -9,10 +10,10 @@ function Header() {
         <h1 className={styles.heading}>
           Unleash Your Potential with our <span>Resume</span> Builder!
         </h1>
-        <p className={styles.para}>Craft Your Career Journey for free !</p>
-        <div className={styles.heroSectionCTA}>
-          <a href="#form">Get Started</a>
-        </div>
+        <p className={styles.para}>Craft Your Career Journey for free </p>
+        {/* <button className={styles.heroSectionCTA}> */}
+        <Link to="/resume">Get Started</Link>
+        {/* </button> */}
       </div>
       <div className={styles.imgContainer}>
         <img src={heroSectionSVG} alt="Resume" />
