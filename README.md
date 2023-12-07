@@ -72,7 +72,7 @@ The app supports syntax highlighting, code auto-completion, and the ability to s
 3. Run `npm install` to install dependencies.
 4. Run `npm start` to start the development server.
 
-![Certificate Image]([path/to/your/certificate/image.png](https://github.com/MahmoudKhalid22/Sync_internship/blob/main/1699101338290-63baa5ad-16f8-4138-9e69-184377ae4b49_1.jpg?raw=true)https://github.com/MahmoudKhalid22/Sync_internship/blob/main/1699101338290-63baa5ad-16f8-4138-9e69-184377ae4b49_1.jpg?raw=true)
+![Certificate Image](https://github.com/MahmoudKhalid22/Sync_internship/blob/main/1699101338290-63baa5ad-16f8-4138-9e69-184377ae4b49_1.jpg)
 
 
 
